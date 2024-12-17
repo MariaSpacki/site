@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Exercício</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='hygge.css') }}">
+    <style>
+        .alternativas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 50px;
+            margin-left: 40px;
+        }
+
+        .alternativa {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #313131;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+            font-size: large;
+            margin-bottom: 15px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            margin-top: 10px;
+        }
+
+        .dropdown-menu a {
+            color: black;
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #ddd;
+        }
+
+        .titulo-exercicio {
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+
+        .form-container button {
+            width: 200px;
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            background-color: {{ exercicio.cor }}; /* Cor do botão */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .form-container {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Logo">
+            </a>
+            <a href="{{ url_for('home') }}" style="text-decoration: none;">
+                <span class="span">Hygge</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('aulas') }}">Aulas</a>
+            <a href="{{ url_for('exercicios') }}">Exercícios</a>
+            <a href="{{ url_for('explorar') }}">Explorar</a>
+        </div>
+        <div class="profile">
+            <a>Olá, {{ username }}</a>
+            <img src="{{ url_for('static', filename='imagens/perfil.png') }}" alt="Perfil" class="img_perfil" onclick="toggleMenu(event)">
+            <div id="dropdownMenu" class="dropdown-menu">
+                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('editar_info') }}">Editar Cadastro</a>
+            </div>
+        </div>
+    </nav>
+    <hr>
+
+    <script>
+        function toggleMenu(event) {
+            event.stopPropagation();
+            var menu = document.getElementById("dropdownMenu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
+
+        window.onclick = function(event) {
+            var menu = document.getElementById("dropdownMenu");
+            if (menu.style.display === "block" && !event.target.closest(".img_perfil")) {
+                menu.style.display = "none";
+            }
+        };
+    </script>
+
+    <main>
+        <div class="titulo-exercicio" style="background-color: {{ exercicio.cor }};">
+            {{ exercicio['nome'] }}
+        </div>
+
+        <h2 style="margin-left: 30px;">Responda as perguntas abaixo:</h2>
+        <form method="POST" action="{{ url_for('submit_respostas', id_exercicio=exercicio['id_exercicio']) }}">
+            {% for pergunta in perguntas %}
+                <div class="pergunta" style="margin-left: 30px;">
+                    <h3>{{ pergunta['nome'] }}</h3>
+                    <div class="alternativas">
+                        {% if alternativas.get(pergunta['id_pergunta']) %}
+                            {% for alternativa in alternativas[pergunta['id_pergunta']] %}
+                                <div class="alternativa">
+                                    <input
+                                        type="radio"
+                                        id="alt_{{ alternativa['id_alternativa'] }}"
+                                        name="pergunta_{{ pergunta['id_pergunta'] }}"
+                                        value="{{ alternativa['id_alternativa'] }}"
+                                        required>
+                                    <label for="alt_{{ alternativa['id_alternativa'] }}">{{ alternativa['nome'] }}</label>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>Nenhuma alternativa disponível para esta pergunta.</p>
+                        {% endif %}
+                    </div>
+                    {% if resultados %}
+                        <p>
+                            Resultado: 
+                            {% if resultados[pergunta['id_pergunta']] == 'correta' %}
+                                ✅ Correta
+                            {% else %}
+                                ❌ Incorreta
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <div class="form-container">
+                <hr>
+                <button type="submit" style="background-color: {{ exercicio.cor }};">Enviar Respostas</button>
+            </div>
+        </form>
+
+        {% if resultados %}
+            <h3>Seu Resultado Final:</h3>
+            <p>Você acertou {{ acertos }} de {{ total_perguntas }} perguntas.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='hygge.css') }}">
+    <title>Exercícios</title>
+
+    <script>
+        function abrirModal() {
+            document.getElementById('exercicio-modal').style.display = 'flex';
+        }
+
+        function fecharModalEdicao() {
+            document.getElementById('editar-exercicio-modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            var modal = document.getElementById('exercicio-modal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Função para confirmar exclusão do exercício
+        function confirmarExclusao(id_exercicio) {
+            if (confirm("Tem certeza que deseja excluir este exercício?")) {
+                // Formulário pro envio via POST
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = `/deletar_exercicio/${id_exercicio}`;
+
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = '_method';  // P simular o método POST
+                input.value = 'POST';
+                form.appendChild(input);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+    </script>
+    <style>
+        .btn-editar,
+        .btn-excluir {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn-editar:hover{
+            background-color: #0056b3;
+        }
+
+        .btn-excluir {
+            right: 80px;
+            background-color: #dc3545;
+        }
+
+        .btn-excluir:hover {
+            background-color: #c82333;
+        }
+        .exercicio-card {
+            position: relative;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px;
+            color: white;
+            display: inline-block;
+            width: 170px;
+            height: 80px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .exercicio-modal-content {
+            position: relative;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            width: 400px;
+        }
+
+        .close-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .close-btn:hover {
+            background-color: #c82333;
+        }
+
+        .pergunta {
+            margin-bottom: 10px;
+        }
+        .flash-messages {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+
+        .flash-message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .flash-message.success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .flash-message.danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Logo">
+            </a>
+            <a href="{{ url_for('home') }}" style="text-decoration: none;">
+                <span class="span">Hygge</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('aulas') }}">Aulas</a>
+            <a href="{{ url_for('exercicios') }}">Exercícios</a>
+            <a href="{{ url_for('explorar') }}">Explorar</a>
+        </div>
+
+<div class="profile">
+    <a>Olá, {{ username }}</a>
+    <img src="{{ url_for('static', filename='imagens/perfil.png') }}" alt="Perfil" class="img_perfil" onclick="toggleMenu(event)">
+    <div id="dropdownMenu" class="dropdown-menu">
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('editar_info') }}">Editar Cadastro</a>
+    </div>
+</div>
+
+<style>
+    /* Estilos para o menu suspenso */
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        margin-top: 10px;
+    }
+
+    .dropdown-menu a {
+        color: black;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: #ddd;
+    }
+</style>
+
+<script>
+    // Função para alternar a exibição do menu
+    function toggleMenu(event) {
+        event.stopPropagation();
+        var menu = document.getElementById("dropdownMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Fechar o menu se o usuário clicar fora da imagem ou do menu
+    window.onclick = function(event) {
+        var menu = document.getElementById("dropdownMenu");
+        if (menu.style.display === "block" && !event.target.closest(".img_perfil")) {
+            menu.style.display = "none";
+        }
+    };
+</script>
+    </nav>
+    <hr>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+    <div class="container-exercicio">
+        <!-- add exercício -->
+        <div class="exercicio-card add-card" id="add-exercicio-card" onclick="abrirModal()">
+            <span class="plus-sign">+</span>
+        </div>
+
+        <div class="exercicio-modal" id="exercicio-modal">
+            <div class="exercicio-modal-content">
+                <span class="close" onclick="document.getElementById('exercicio-modal').style.display='none'">&times;</span>
+                <form id="form-exercicio" method="POST" action="{{ url_for('adicionar_exercicio') }}">
+                    <label for="id_aula">Aula:</label>
+                    <select name="id_aula" id="id_aula">
+                        {% for aula in aulas %}
+                            <option value="{{ aula.id_aula }}">{{ aula.nome }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="nome">Nome:</label>
+                    <input type="text" name="nome" required>
+
+                    <div id="perguntas-container"></div>
+                    <button type="button" id="adicionar-pergunta">Adicionar Pergunta</button>
+                    
+                    <button type="submit">Adicionar Exercício</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- exercícios adicionados -->
+        <div class="exercicios-list">
+            {% for exercicio in exercicios %}
+                <div class="exercicio-card" style="background-color: {{ exercicio.cor }};">
+                    <h3>{{ exercicio.nome }}</h3>
+
+                    <button class="btn-editar" onclick="abrirModalEdicao('{{ exercicio.id_exercicio }}', '{{ exercicio.nome }}', '{{ exercicio.id_aula }}')">Editar</button>
+                    <button class="btn-excluir" onclick="confirmarExclusao('{{ exercicio.id_exercicio }}')">Excluir</button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- p ditar exercício existente -->
+    <div class="exercicio-modal" id="editar-exercicio-modal" style="display: none;">
+        <div class="exercicio-modal-content">
+            <span class="close" onclick="document.getElementById('editar-exercicio-modal').style.display='none'">&times;</span>
+            <form id="form-editar-exercicio" method="POST" action="{{ url_for('editar_exercicio') }}">
+                <input type="hidden" name="id_exercicio" id="editar-id-exercicio">
+                
+                <label for="editar-id_aula">Aula:</label>
+                <select name="id_aula" id="editar-id_aula">
+                    {% for aula in aulas %}
+                        <option value="{{ aula.id_aula }}">{{ aula.nome }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="editar-nome">Nome do Exercício:</label>
+                <input type="text" name="nome" id="editar-nome" required>
+
+                <div id="editar-perguntas-container"></div>
+
+                <button type="button" id="adicionar-pergunta-edicao">Adicionar Pergunta</button>
+                <button type="submit">Salvar Alterações</button>
+                <button type="button" class="close-btn" onclick="fecharModalEdicao()">Fechar</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        
+        // Função p adicionar perguntas pro exercicio
+        document.getElementById('adicionar-pergunta').addEventListener('click', function() {
+            const container = document.getElementById('perguntas-container');
+            
+            const perguntaDiv = document.createElement('div');
+            perguntaDiv.classList.add('pergunta');
+
+            perguntaDiv.innerHTML = 
+                `<label>Pergunta:</label>
+                <input type="text" name="pergunta[]" required>
+                <label>Alternativas:</label>
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 1">
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 2">
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 3">
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 4">
+                <label>Alternativa Correta:</label>
+                <select name="correta[]">
+                    <option value="1">Alternativa 1</option>
+                    <option value="2">Alternativa 2</option>
+                    <option value="3">Alternativa 3</option>
+                    <option value="4">Alternativa 4</option>
+                </select>
+                <hr>`;
+            
+            container.appendChild(perguntaDiv);
+        });
+
+        // Função para abrir a edição com os dados do exercício
+        function abrirModalEdicao(id_exercicio, nome, id_aula) {
+            document.getElementById('editar-id-exercicio').value = id_exercicio;
+            document.getElementById('editar-nome').value = nome;
+            document.getElementById('editar-id_aula').value = id_aula;
+            
+            // limpa o container de perguntas anteriores
+            const perguntasContainer = document.getElementById('editar-perguntas-container');
+            perguntasContainer.innerHTML = ''; 
+
+            // obter perguntas e alternativas do exercício
+            fetch(`/exercicio/${id_exercicio}/perguntas`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(pergunta => {
+                        const perguntaDiv = document.createElement('div');
+                        perguntaDiv.classList.add('pergunta');
+
+                        perguntaDiv.innerHTML = 
+                            `<label>Pergunta:</label>
+                            <input type="text" name="pergunta[]" value="${pergunta.nome}" required>
+                            <label>Alternativas:</label>
+                            <input type="text" name="alternativa[]" value="${pergunta.alternativas[0].nome}" required placeholder="Alternativa 1">
+                            <input type="text" name="alternativa[]" value="${pergunta.alternativas[1].nome}" required placeholder="Alternativa 2">
+                            <input type="text" name="alternativa[]" value="${pergunta.alternativas[2].nome}" required placeholder="Alternativa 3">
+                            <input type="text" name="alternativa[]" value="${pergunta.alternativas[3].nome}" required placeholder="Alternativa 4">
+                            <label>Alternativa Correta:</label>
+                            <select name="correta[]">
+                                <option value="1" ${pergunta.correta === 1 ? 'selected' : ''}>Alternativa 1</option>
+                                <option value="2" ${pergunta.correta === 2 ? 'selected' : ''}>Alternativa 2</option>
+                                <option value="3" ${pergunta.correta === 3 ? 'selected' : ''}>Alternativa 3</option>
+                                <option value="4" ${pergunta.correta === 4 ? 'selected' : ''}>Alternativa 4</option>
+                            </select>
+                            <hr>`;
+                        
+                        perguntasContainer.appendChild(perguntaDiv);
+                    });
+                });
+
+            document.getElementById('editar-exercicio-modal').style.display = 'flex';
+        }
+
+        // Função p adicionar perguntas na edição
+        document.getElementById('adicionar-pergunta-edicao').addEventListener('click', function() {
+            const container = document.getElementById('editar-perguntas-container');
+            
+            const perguntaDiv = document.createElement('div');
+            perguntaDiv.classList.add('pergunta');
+
+            perguntaDiv.innerHTML = 
+                `<label>Pergunta:</label>
+                <input type="text" name="pergunta[]" required>
+                <label>Alternativas:</label>
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 1">
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 2">
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 3">
+                <input type="text" name="alternativa[]" required placeholder="Alternativa 4">
+                <label>Alternativa Correta:</label>
+                <select name="correta[]">
+                    <option value="1">Alternativa 1</option>
+                    <option value="2">Alternativa 2</option>
+                    <option value="3">Alternativa 3</option>
+                    <option value="4">Alternativa 4</option>
+                </select>
+                <hr>`;
+            
+            container.appendChild(perguntaDiv);
+        });
+    </script>
+</body>
+</html>

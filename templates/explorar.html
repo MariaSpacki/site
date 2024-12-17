@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='hygge.css') }}">
+    <title>Explorar</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Logo">
+            </a>
+            <a href="{{ url_for('home') }}" style="text-decoration: none;">
+                <span class="span">Hygge</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('aulas') }}">Aulas</a>
+            <a href="{{ url_for('exercicios') }}">Exercícios</a>
+            <a href="{{ url_for('explorar') }}">Explorar</a>
+        </div>
+<div class="profile">
+    <a>Olá, {{ username }}</a>
+    <img src="{{ url_for('static', filename='imagens/perfil.png') }}" alt="Perfil" class="img_perfil" onclick="toggleMenu(event)">
+    <div id="dropdownMenu" class="dropdown-menu">
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('editar_info') }}">Editar Cadastro</a>
+    </div>
+</div>
+
+<style>
+    /* Estilos pro menu suspenso */
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        margin-top: 10px;
+    }
+
+    .dropdown-menu a {
+        color: black;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: #ddd;
+    }
+
+    .conteudoEx {
+        max-width: 1200px;
+        margin: auto;
+        text-align: center;
+        text-align: justify;
+    }
+
+    .conteudoEx p {
+        font-family: "Inter", sans-serif;
+        color: black;
+        font-optical-sizing: auto;
+        font-weight: 300;
+        font-style: normal;
+        font-size: large;
+    }
+
+    .img {
+        max-width:700px;
+        width: auto;
+        height: auto;
+        margin: auto;
+        display: block;
+    }
+
+    .figcaption{
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        color: black;
+        font-optical-sizing: auto;
+        font-weight: 200;
+        font-style: normal;
+        font-size: 15px;;
+    }
+
+</style>
+
+<script>
+    // Função para alternar a exibição do menu
+    function toggleMenu(event) {
+        event.stopPropagation();
+        var menu = document.getElementById("dropdownMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Fechar o menu se o usuário clicar fora da imagem ou do menu
+    window.onclick = function(event) {
+        var menu = document.getElementById("dropdownMenu");
+        if (menu.style.display === "block" && !event.target.closest(".img_perfil")) {
+            menu.style.display = "none";
+        }
+    };
+</script>
+    </nav>
+    <hr>
+    <div class="conteudoEx">
+        <h1 class="inter"><strong>Hygge, um estilo de vida na dinamarca</strong></h1>
+        <figure><p> <img src="{{ url_for('static', filename='imagens/danish_hygge.webp') }}" alt="" class="img">
+                <figcaption class="figcaption"><i>Luz baixa de velas é uma característica bem marcante do hygge.</i> </figcaption>
+            </figure>
+        </p>
+        
+        <p>Dinamarca é a terra de Hamlet, de Hans Christian Andersen, de LEGO, de Carlsberg, dos Vikings e de <strong><i>Hygge</i></strong>. 
+            Essa última palavrinha virou moda e está estampada em diversas publicações mundo afora, sendo representada quase que como 
+            uma marca de ‘made in Denmark’ para o resto do mundo. Mas o que é, de verdade, o hygge?
+        </p>
+
+        <p>Tudo que traz conforto, sensação de <strong>bem-estar</strong>, prazer sensorial e visual pode ser considerado como hygge. 
+            Decorar a casa com flores da estação, obras de arte ou mesmo artesanato; acender velas ao entardecer, para 
+            manter uma luz baixa e aquecer o ambiente; reunir os amigos para assar uma carne, tomar cerveja ou simplesmente 
+            para um bate-papo com café e bolo: <strong>tudo isso é hygge</strong>.
+        </p>
+
+        <p>O conceito de hygge é tão forte no país que mesmo nas reuniões de negócios, o tal do hygge está presente: sempre haverá uma 
+            <strong>velinha acesa</strong>, mesmo que seja de dia, água fresca, café e chá e uma guloseima – geralmente doce – para 
+            transformar a ocasião 
+            num momento <strong>acolhedor e prazeroso</strong>.
+        </p>
+
+        
+</div>
+</body>
+</html>

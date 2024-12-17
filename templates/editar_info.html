@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Informações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>Hygge</h1>
+        </div>
+        <h2 style="text-align: center; margin-bottom: 20px;">Editar Informações</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('alterar_senha') }}" method="post">
+            <label for="nova_senha">Nova Senha:</label>
+            <input type="password" id="nova_senha" name="nova_senha" required>
+            
+            <label for="confirmar_senha">Confirmar Nova Senha:</label>
+            <input type="password" id="confirmar_senha" name="confirmar_senha" required>
+            
+            <button type="submit">Alterar Senha</button>
+        </form>
+    </div>
+</body>
+</html>

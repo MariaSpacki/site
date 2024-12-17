@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='hygge.css') }}">
+    <title>Exercícios</title>
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home') }}">
+                <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Logo">
+            </a>
+            <a href="{{ url_for('home') }}" style="text-decoration: none;">
+                <span class="span">Hygge</span>
+            </a>
+        </div>
+        <div class="nav-links">
+            <a href="{{ url_for('aulas') }}">Aulas</a>
+            <a href="{{ url_for('exercicios') }}">Exercícios</a>
+            <a href="{{ url_for('explorar') }}">Explorar</a>
+        </div>
+
+<div class="profile">
+    <a>Olá, {{ username }}</a>
+    <img src="{{ url_for('static', filename='imagens/perfil.png') }}" alt="Perfil" class="img_perfil" onclick="toggleMenu(event)">
+    <div id="dropdownMenu" class="dropdown-menu">
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('editar_info') }}">Editar Cadastro</a>
+    </div>
+</div>
+
+<style>
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 150px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        margin-top: 10px;
+    }
+
+    .dropdown-menu a {
+        color: black;
+        padding: 10px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: #ddd;
+    }
+    a {
+    text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+</style>
+
+<script>
+    // Função para alternar a exibição do menu
+    function toggleMenu(event) {
+        event.stopPropagation();
+        var menu = document.getElementById("dropdownMenu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+    }
+
+    // Fechar o menu se o usuário clicar fora da imagem ou do menu
+    window.onclick = function(event) {
+        var menu = document.getElementById("dropdownMenu");
+        if (menu.style.display === "block" && !event.target.closest(".img_perfil")) {
+            menu.style.display = "none";
+        }
+    };
+</script>
+    </nav>
+    
+    <hr>
+    <div class="exercicios-list">
+        {% for exercicio in exercicios %}
+            <a href="{{ url_for('exercicio_detail', id_exercicio=exercicio.id_exercicio) }}">
+                <div class="exercicio-card" style="background-color: {{ exercicio.cor }};">
+                    <h3>{{ exercicio.nome }}</h3>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

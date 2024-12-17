@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='hygge.css') }}">
+    <title>Home - Hygge</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+          <img src="{{ url_for('static', filename='imagens/logo.png') }}" alt="Logo">
+          <span class="span">Hygge</span>
+        </div>
+        <div class="nav-links">
+            <a href="#section2">Objetivo</a>
+            <a href="#section3">Quem sou?</a>
+        </div>
+        <button class="btn" onclick="window.location.href='/login'">Já sou aluno</button>
+    </nav>
+      
+    <section class="secao1">
+        <div>
+            <h1>Hygge</h1>
+            <hr>
+            <p>Bem vindo ao Hygge, seu site para aprender dinamarquês!</p>
+        </div>
+    </section>
+      
+    <section class="secao2" id="section2">
+        <div>
+            <h2>Qual a importância de aprender outra língua?</h2>
+            <p><img src="{{ url_for('static', filename='imagens/livro.png') }}" alt="Icon" class="img1">Segundo o 
+              Instituto de Estatísticas da UNESCO, em 2016, aproximadamente 43% das cerca de 7 mil línguas faladas 
+              no mundo estão <strong>ameaçadas de extinção</strong>, devido à rápida globalização e homogeneização
+              cultural. sso ressalta a importância de preservar 
+              e promover o ensino de idiomas menos difundidos, como o dinamarquês, 
+              que enfrenta desafios de preservação devido à sua menor difusão em 
+              comparação com idiomas mais amplamente falados. No Brasil, o aprendizado 
+              da língua dinamarquesa enfrenta desafios, principalmente devido à escassez 
+              de recursos educacionais disponíveis e à relativa falta de exposição à língua 
+              e à cultura dinamarquesa.</p>
+
+            <p><img src="{{ url_for('static', filename='imagens/outras_linguas.jpg') }}" alt="Línguas" class="img2"> A procura 
+              de brasileiros interessados em aprender um outro idioma, além do inglês, cresceu 36% no primeiro semestre de 
+              2023, comparado ao mesmo período de 2022, segundo levantamento
+              realizado pelo <strong>Student Travel Bureau (STB)</strong>, consultoria especializada 
+              em educação internacional, principalmente devido a busca por cidadania
+              europeia e a internacionalização das empresas, que são um dos motivos
+              que justifica o estudo de novas línguas.
+          </p>
+          <p>Com isso, percebemos a importância da utilização de <strong>formas de ensino mais eficazes</strong> e de fácil 
+              acesso, que promovam a língua dinamarquesa, afinal, a aprendizagem de um novo idioma segue 
+              diferentes padrões</p>
+          <p>Sendo assim, o processo de aprendizagem de uma língua estrangeira não se restringe apenas à 
+              memorização de vocabulário e regras gramaticais, mas também envolve a compreensão das nuances 
+              culturais e sociais que permeiam a comunidade onde essa língua é falada.</p></p>
+        </div>
+    </section>
+      
+    <section class="secao3" id="section3">
+        <div>
+            <h2>Quem sou?</h2>
+            <p><img src="{{ url_for('static', filename='imagens/maria_spacki.JPG') }}" alt="Maria Spacki" class="img3"> Maria Spacki, 18 anos - Estudante.</p>
+            <p>Cursando o ensino médio no Instituto Federal do Paraná, Campus avançado Quedas do Iguaçu.</p>
+            <p>Fez um intercâmbio na Dinamarca, pelo Rotary Youth Exchange Program, nos anos de 2022/23, onde adquiriu conhecimento na lingua dinamarquesa.</p>
+            <p>Cursou Inglês na Wizard durante 3 anos e aprimorou ele durante seu intercâmbio.</p>
+            <p>Ganhadora do Concurso de Oratória do Conjovem nos anos de 2018, 2019 e 2023, com um segundo lugar em 2024.</p>
+            <p>Mora em Quedas do Iguaçu/PR.</p>
+        </div> 
+    </section>
+
+    <script>
+        const links = document.querySelectorAll('nav a');
+        
+        links.forEach(link => {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          });
+        });
+    </script>
+        
+</body>
+</html>

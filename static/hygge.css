@@ -1,0 +1,632 @@
+/* Estilos para cada seção */
+.secao1 {
+  background-image: url('imagens/nyhavn.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.secao1 h1 {
+  color: antiquewhite;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 90px;
+  margin-bottom: 10px;
+}
+
+.secao1 p {
+  color: antiquewhite;
+  font-family: Cambria;
+  font-size: 20px;
+  margin-top: 0px;
+}
+
+.secao2 {
+  background-color: white;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  overflow: hidden; /* Garante que nada vaze da seção */
+}
+
+.secao2 h1 {
+  margin-top: 60px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 30px;
+  text-align: center;
+  color: black;
+}
+
+.secao2 h2 {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 30px;
+  margin-top: 60px;
+  text-align: center;
+  color: #333;
+}
+
+.secao2 p {
+  font-size: 20px;
+  font-family: Cambria;
+  margin-left: 30px;
+  margin-right: 30px;
+  text-align: justify;
+  color: #333;
+}
+
+.secao3 {
+  background-color: rgba(105, 10, 10, 0.863);
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  overflow: hidden; /* Garante que nada vaze da seção */
+}
+
+.secao3 h2 {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 30px;
+  padding-top: 30px;
+  text-align: center;
+  color: white;
+}
+
+.secao3 p {
+  font-size: 25px;
+  font-family: cambria;
+  margin-right: 40px;
+  text-align: justify;
+  color: white;
+}
+
+.navbar {
+  background-color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.span {
+  font-size: 30px;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  color: rgb(177, 8, 8);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: #333;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 23px;
+  color: #333;
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.btn {
+  background-color: rgb(177, 8, 8);
+  color: #fff;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-size: 18px;
+}
+
+.img1 {
+  width: 5%;
+  float: left;
+  margin-right: 13px;
+}
+
+.img2 {
+  width: 55%;
+  float: inline-start;
+  margin-bottom: 10px;
+}
+
+.img3 {
+  width: 35%;
+  float: inline-start;
+  margin-bottom: 10px;
+  margin-inline-start: 60px;
+  margin-right: 40px;
+  border-radius: 15px;
+}
+
+.img_perfil {
+  width: 7vh;
+  margin-left: 5px;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Card para adicionar nova aula */
+.aula-card.add-card {
+  width: 200px;
+  height: 100px;
+  background-color: #cccccc;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal para adicionar nova aula */
+.add-aula-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* Oculta o modal por padrão */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: auto; /* Adiciona rolagem ao modal se o conteúdo for maior que a tela */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%; /* Ajuste a largura do modal conforme necessário */
+  max-width: 800px; /* Máxima largura para não ficar muito grande em telas largas */
+  max-height: 80vh; /* Máxima altura para evitar que o modal fique muito grande */
+  overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior que a altura do modal */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura e altura */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Faz com que os elementos filhos se estiquem para preencher o modal */
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content input, 
+.modal-content select, 
+.modal-content textarea {
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%; /* Faz com que os campos de formulário se ajustem à largura do modal */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+}
+
+.modal-content textarea {
+  resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+.modal-content .modal-btn {
+  padding: 10px 20px;
+  background-color: rgb(177, 8, 8);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start; /* Alinha o botão à esquerda dentro do modal */
+}
+
+.modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.modal-content .close:hover {
+  color: #000;
+}
+
+.modal-content input[type="color"] {
+  width: 100%; /* Garante que o campo de cor use a largura disponível */
+  padding: 0; /* Remove padding para evitar sobreposição */
+  border: 1px solid #ccc; /* Adiciona uma borda para visibilidade */
+  border-radius: 5px; /* Adiciona bordas arredondadas */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+}
+
+.modal-content label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  display: block; /* Garante que o label ocupe a linha inteira */
+}
+
+/* Estilos para o formulário */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100
+}
+
+/* Estilos para o botão de enviar */
+.modal-content .submit-btn {
+  padding: 10px 20px;
+  background-color: rgb(177, 8, 8);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.modal-content .submit-btn:hover {
+  background-color: rgb(124, 6, 6);
+}
+
+/* Estilos gerais de botões */
+button {
+  padding: 10px;
+  background-color: rgb(177, 8, 8);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgb(124, 6, 6);
+}
+
+/* Estilos para fechar o modal */
+.modal-content .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.modal-content .close-btn:hover {
+  color: #000;
+}
+
+/* Estilos para as imagens */
+.img-card {
+  width: 100%;
+  border-radius: 5px;
+}
+
+/* Card para adicionar nova aula */
+.aula-card.add-card {
+  width: 200px;
+  height: 100px;
+  background-color: #cccccc;
+  color: #555;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.aula-card.add-card:hover {
+  background-color: #b3b3b3; /* Escurece um pouco ao passar o mouse */
+}
+
+.plus-sign {
+  font-size: 36px;
+  color: #555;
+}
+
+/* Card de aula que é um link */
+.aula-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alinha os textos no topo */
+  align-items: center;
+  width: 200px;
+  height: 100px;
+  background-color: #cccccc; /* Cor de fundo do card */
+  color: white; /* Cor do texto */
+  text-decoration: none; /* Remove o sublinhado padrão do link */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  padding: 10px; /* Adiciona um padding interno para o alinhamento */
+}
+
+/* Efeito de hover para o card */
+.aula-card:hover {
+  background-color: #b3b3b3; /* Escurece um pouco ao passar o mouse */
+}
+
+/* Estilo para os textos dentro do card */
+.aula-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Alinha os textos no topo */
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.aula-numero {
+  font-size: 16px;
+  color: white; /* Cor do texto */
+  margin-bottom: 5px;
+}
+
+.aula-nome {
+  font-size: 20px;
+  font-weight: bold;
+  color: white; /* Cor do texto */
+  text-align: center;
+}
+
+
+/* Layout responsivo para os cards */
+@media (max-width: 768px) {
+  .aula-card {
+    width: 100%;
+    height: 150px;
+  }
+
+  .modal-content {
+    width: 90%;
+    max-width: 600px;
+  }
+}
+
+/* Animações para o modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.add-aula-modal {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Estilos para a página de detalhes da aula */
+.aula-detail {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.video-container {
+  margin-bottom: 20px;
+}
+
+.conteudo h1, h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.conteudo p {
+  font-size: 16px;
+  color:#555;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.conteudo ul {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+/* Estilo para os botões "Editar" e "Excluir" */
+.btn.editar-btn, .btn.excluir-btn {
+  padding: 5px 10px; /* Diminuir o padding para menor tamanho */
+  font-size: 12px;   /* Reduzir o tamanho da fonte */
+  border-radius: 4px; /* Adicionar borda arredondada, se desejar */
+  border: 1px solid #ccc; /* Borda leve */
+  background-color: #007bff; /* Cor de fundo do botão */
+  color: #fff; /* Cor do texto do botão */
+  cursor: pointer; /* Mostrar cursor de ponteiro ao passar o mouse */
+  transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+.btn.editar-btn:hover, .btn.excluir-btn:hover {
+  background-color: #0056b3; /* Cor de fundo ao passar o mouse (para editar) */
+}
+
+.btn.excluir-btn {
+  background-color: #dc3545; /* Cor de fundo para o botão "Excluir" */
+}
+
+.btn.excluir-btn:hover {
+  background-color: #c82333; /* Cor de fundo ao passar o mouse (para excluir) */
+}
+
+
+.edit-button:hover, 
+.delete-button:hover {
+    background-color: rgb(124, 6, 6);
+}
+
+/* Container dos botões dentro do card */
+.card-buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões dentro do card */
+    margin-top: 10px; /* Espaçamento no topo */
+}
+
+/* Modal para editar aula */
+.edit-aula-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* Oculta o modal por padrão */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow: auto; /* Adiciona rolagem ao modal se o conteúdo for maior que a tela */
+}
+
+.edit-aula-modal .modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%; /* Ajuste a largura do modal conforme necessário */
+  max-width: 800px; /* Máxima largura para não ficar muito grande em telas largas */
+  max-height: 80vh; /* Máxima altura para evitar que o modal fique muito grande */
+  overflow-y: auto; /* Adiciona rolagem vertical se o conteúdo for maior que a altura do modal */
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura e altura */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Faz com que os elementos filhos se estiquem para preencher o modal */
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.edit-aula-modal .modal-content .close-edit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.edit-aula-modal .modal-content .close-edit:hover {
+  color: #000;
+}
+
+.exercicio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.exercicio-card {
+  width: 90%;
+  height: 50px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 auto;
+  color: white;
+}
+
+.exercicio-card:hover {
+  background-color: #e0e0e0;
+}
+
+.exercicio-plus-sign {
+  font-size: 40px;
+  color: #333;
+}
+
+/* Modal para adicionar novo exercício */
+.exercicio-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none; /* Oculta o modal por padrão */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.exercicio-modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%; /* Ajuste a largura do modal conforme necessário */
+  max-width: 800px; /* Máxima largura para não ficar muito grande em telas largas */
+  max-height: 80vh; /* Altura máxima para o conteúdo do modal */
+  overflow-y: auto; /* Habilita rolagem vertical se o conteúdo exceder a altura máxima */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.exercicio-modal-content input {
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%; /* Faz com que os campos de formulário se ajustem à largura do modal */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Garante que padding e border sejam incluídos na largura */
+}
+
+.exercicio-modal-content .close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.exercicio-modal-content .close:hover {
+  color: #000;
+}
